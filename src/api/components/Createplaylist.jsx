@@ -14,14 +14,14 @@ export default function Createplaylist() {
 
     if (!title.trim()) {
       setMessage("please enter the playlist name");
-      return; 
+      return;
     }
     const token = localStorage.getItem("token")
-    console.log("haloo token",token);
-    
+    console.log("haloo token", token);
+
 
     try {
-      const createplylst = await api.post("/addplaylist", { title},{headers:{Authorization:token}}) 
+      const createplylst = await api.post("/addplaylist", { title }, { headers: { Authorization: token } })
       console.log(createplylst.data);
       toast.success("playlist created successfully")
       setMessage("Created successfully");
@@ -34,43 +34,61 @@ export default function Createplaylist() {
     }
   };
 
-   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-gray-800/90 backdrop-blur-md border border-gray-700 p-6 rounded-2xl shadow-2xl">
+  return (
+    <div className="min-h-screen bg-dark-bg flex items-center justify-center px-4 py-16 sm:py-12 relative overflow-hidden">
 
-        <h1 className="text-2xl font-bold text-teal-400 mb-6 text-center">
-          Create Playlist
+      {/* Back Button */}
+      <button
+        onClick={() => navigate("/allplylst")}
+        className="absolute top-4 left-4 sm:top-8 sm:left-8 w-10 h-10 sm:w-12 sm:h-12 glass-card rounded-xl sm:rounded-2xl flex items-center justify-center text-mint-whisper hover:bg-royal-amethyst hover:text-white transition-all duration-300 z-50 text-sm sm:text-base"
+      >
+        ←
+      </button>
+
+      <div className="glass-card w-full max-w-lg p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl relative z-10">
+
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-mint-whisper mb-1 text-center tracking-tighter">
+          Vibe <span className="text-royal-amethyst">Vault</span>
         </h1>
+        <p className="text-mint-whisper/40 text-center mb-6 sm:mb-10 font-medium italic text-[11px] sm:text-sm">Define the soul of your collection.</p>
 
-        <form onSubmit={handleplaylist} className="space-y-4">
-          
-          <input
-            type="text"
-            placeholder="Playlist name"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-gray-900 border border-gray-700 text-white px-3 py-2 rounded-lg
-            focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
+        <form onSubmit={handleplaylist} className="space-y-4 sm:space-y-8">
 
-          <button
-            type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-xl
-            font-semibold transition transform hover:scale-105"
-          >
-            Create Playlist
-          </button>
-        <button className="bg-gray-800 text-red-400 px-5 py-2 rounded-xl font-semibold shadow-md
-          hover:bg-orange-500 hover:text-white transition transform hover:scale-105"
-          onClick={navigate('/allplylst')}>
-            Cancel
-        </button>
-             </form>
+          <div className="space-y-1.5 sm:space-y-2">
+            <label className="block text-[10px] sm:text-sm font-bold text-mint-whisper/60 ml-1 uppercase tracking-widest">
+              Collection Name
+            </label>
+            <input
+              type="text"
+              placeholder="Ethereal Soundscapes"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full input-premium py-3 sm:py-4 text-sm"
+            />
+          </div>
+
+          <div className="pt-2 sm:pt-4 flex flex-col space-y-3 sm:space-y-4">
+            <button
+              type="submit"
+              className="btn-premium py-3.5 sm:py-5 text-sm sm:text-lg shadow-xl shadow-royal-amethyst/20"
+            >
+              Add Collection
+            </button>
+
+            <button
+              type="button"
+              className="text-[9px] sm:text-xs font-black uppercase tracking-[0.2em] text-mint-whisper/20 hover:text-red-400 transition-colors duration-300 py-1"
+              onClick={() => navigate('/allplylst')}
+            >
+              Withdraw
+            </button>
+          </div>
+        </form>
 
         {message && (
-          <p className="mt-4 text-center text-sm text-red-400">
+          <div className="mt-4 sm:mt-8 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] sm:text-sm font-semibold text-center animate-pulse">
             {message}
-          </p>
+          </div>
         )}
       </div>
     </div>

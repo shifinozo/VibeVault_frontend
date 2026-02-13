@@ -35,75 +35,68 @@ function Register() {
 
     } catch (error) {
       console.log("Something went wrong!", error);
-      
+
       setMessage("Registration failed");
       toast.error("Registration failed")
     }
   };
 
   return (
-    <div className="flex items-center justify-center rounded-xl bg-gradient-to-br from-gray-900 via-black to-gray-900 ">
-      <div className="bg-gray-800/90 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-md">
-
-        <h1 className="text-2xl font-bold text-center mb-6  text-teal-400">
-          Create Account
-        </h1>
+    <div className="flex items-center justify-center">
+      <div className="w-full">
+        <h2 className="text-2xl font-bold text-center mb-8 text-mint-whisper/90">
+          Join the Rhythm
+        </h2>
 
         {message && (
-          <p className="text-center mb-4 text-red-400 font-medium">
+          <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium text-center">
             {message}
-          </p>
+          </div>
         )}
 
-        <form className="space-y-4" onSubmit={handleuser}>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Name
+        <form className="space-y-6" onSubmit={handleuser}>
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-mint-whisper/60 ml-1">
+              Full Name
             </label>
             <input
               type="text"
-              placeholder="Enter name"
+              placeholder="Alex Smith"
               value={name}
               onChange={(e) => setname(e.target.value)}
-              className="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-white
-              focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full input-premium py-3"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Email
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-mint-whisper/60 ml-1">
+              Email Address
             </label>
             <input
               type="email"
-              placeholder="Enter email"
+              placeholder="alex@example.com"
               value={email}
               onChange={(e) => setemail(e.target.value)}
-              className="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-white
-              focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full input-premium py-3"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-xl
-            font-semibold transition transform hover:scale-105"
+            className="w-full btn-premium py-4 mt-4 text-lg"
           >
-            Create User
+            Create Your Account
           </button>
-
         </form>
 
-        <div className="mt-4 text-center">
+        <div className="mt-8 text-center border-t border-royal-amethyst/20 pt-6">
           <button
             onClick={() => navigate("/loginuser")}
-            className="text-sm font-semibold text-gray-400 hover:text-teal-400 transition"
+            className="text-sm font-medium text-mint-whisper/40 hover:text-royal-amethyst transition-colors"
           >
-            Already have an account? Sign In
+            Already a member? <span className="text-mint-whisper underline underline-offset-4">Sign In</span>
           </button>
         </div>
-
       </div>
     </div>
   );

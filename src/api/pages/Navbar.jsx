@@ -5,51 +5,83 @@ import { useNavigate } from 'react-router-dom'
 function Navbar() {
   const navigate = useNavigate()
 
-  
+
 
   return (
-    <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg sticky top-0 z-50 flex justify-between items-center px-8 py-4 border-b border-gray-700">
-      <h1
-        onClick={() => navigate("/")}
-        className="text-2xl font-extrabold text-white tracking-wide cursor-pointer hover:text-teal-400 transition"
-      >
-        Music Manager
-      </h1>
-
-      <div className="space-x-3">
-        <button
-          onClick={() => navigate("/createsong")}
-          className="bg-gray-800 text-blue-400 px-5 py-2 rounded-xl font-semibold shadow-md
-          hover:bg-blue-500 hover:text-white transition transform hover:scale-105"
+    <>
+      {/* Top Bar - Premium Branding */}
+      <div className="glass-card sticky top-0 z-[100] flex justify-between items-center px-6 sm:px-10 h-16 sm:h-20 border-x-0 border-t-0 border-b border-royal-amethyst/20 rounded-none backdrop-blur-2xl">
+        <h1
+          onClick={() => navigate("/homepage")}
+          className="text-xl sm:text-3xl font-black text-mint-whisper tracking-tighter cursor-pointer hover:text-royal-amethyst transition-all duration-300"
         >
-          Create Song
-        </button>
+          Vibe<span className="text-royal-amethyst">Vault</span>
+        </h1>
 
-        <button
-          onClick={() => navigate("/allplylst")}
-          className="bg-gray-800 text-green-400 px-5 py-2 rounded-xl font-semibold shadow-md
-          hover:bg-green-500 hover:text-white transition transform hover:scale-105"
-        >
-          My Playlist
-        </button>
+        {/* Desktop Nav Items */}
+        <div className="hidden md:flex items-center space-x-8">
+          <button
+            onClick={() => navigate("/createsong")}
+            className="text-sm font-bold text-mint-whisper/70 hover:text-royal-amethyst transition-colors"
+          >
+            Add Song
+          </button>
+          <button
+            onClick={() => navigate("/allplylst")}
+            className="text-sm font-bold text-mint-whisper/70 hover:text-royal-amethyst transition-colors"
+          >
+            My Playlists
+          </button>
+          <div className="h-6 w-px bg-royal-amethyst/20 mx-2"></div>
+        </div>
 
+        {/* Logout (Visible on all devices) */}
         <button
           onClick={() => {
             localStorage.clear();
             navigate("/loginuser");
           }}
-          className="bg-gray-800 text-red-400 px-5 py-2 rounded-xl font-semibold shadow-md
-          hover:bg-red-500 hover:text-white transition transform hover:scale-105"
+          className="btn-premium px-4 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-sm"
         >
-          Logout
-        </button>
-        <button className="bg-gray-800 text-red-400 px-5 py-2 rounded-xl font-semibold shadow-md
-          hover:bg-orange-500 hover:text-white transition transform hover:scale-105"
-           onClick={navigate('/homepage')}>
-            Back to home
+          {/* Mobile Icon for logout if screen is too small */}
+          <span className="hidden xs:inline">Logout</span>
+          <span className="xs:hidden">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+          </span>
         </button>
       </div>
-    </div>
+
+      {/* Spotify-style Bottom Navigation for Mobile */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[100] glass-card pb-safe-area border-t border-royal-amethyst/20 rounded-none">
+        <div className="flex justify-around items-center h-16">
+          <button
+            onClick={() => navigate("/homepage")}
+            className="flex flex-col items-center justify-center space-y-1 text-mint-whisper/40 hover:text-royal-amethyst transition-all active:scale-90"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>
+            <span className="text-[10px] font-bold uppercase tracking-widest">Home</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/createsong")}
+            className="flex flex-col items-center justify-center space-y-1 text-mint-whisper/40 hover:text-royal-amethyst transition-all active:scale-90"
+          >
+            <div className="w-10 h-10 bg-royal-amethyst rounded-xl flex items-center justify-center -mt-6 shadow-lg shadow-royal-amethyst/20 border-4 border-dark-bg text-white">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" /></svg>
+            </div>
+            <span className="text-[10px] font-bold uppercase tracking-widest pt-1">Add</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/allplylst")}
+            className="flex flex-col items-center justify-center space-y-1 text-mint-whisper/40 hover:text-royal-amethyst transition-all active:scale-90"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" /></svg>
+            <span className="text-[10px] font-bold uppercase tracking-widest">Library</span>
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
 

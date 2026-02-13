@@ -76,74 +76,105 @@ const addsongtoplist = async (playlistId) => {
 
     
     return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 p-6 flex justify-center">
-      <div className="w-full max-w-md bg-gray-800/90 backdrop-blur-md border border-gray-700 rounded-2xl shadow-2xl p-6">
-        
-        <h1 className="text-3xl font-bold text-center text-teal-400 mb-6">
-          All Songs
-        </h1>
+    <div className="bg-dark-bg min-h-screen py-12 px-4 sm:px-6 pb-32">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-mint-whisper tracking-tighter">
+            Discover <span className="text-royal-amethyst">Tracks</span>
+          </h1>
+          <p className="text-mint-whisper/40 mt-2 font-medium">Curated for your aesthetic vibe.</p>
+        </div>
 
-        <div className="space-y-4">
+        {/* List for mobile, grid for desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
           {songs.map((song) => (
             <div
               key={song._id}
-              className="bg-gray-900 border border-gray-700 p-4 rounded-xl shadow hover:bg-gray-700 transition"
+              className="glass-card group flex md:flex-col items-center md:items-stretch p-3 sm:p-6 rounded-2xl md:rounded-[2rem] transition-all duration-500 hover:border-royal-amethyst/60"
             >
-              <p className="text-lg font-semibold text-white">
-                {song.title}
-              </p>
-              <p className="text-sm text-gray-400 mb-2">
-                {song.artist}
-              </p>
+              {/* Image Section */}
+              <div className="w-16 h-16 md:w-full md:h-auto md:aspect-square flex-shrink-0 md:mb-6 overflow-hidden rounded-xl md:rounded-2xl bg-deep-amethyst/40">
+                {song.imagePath ? (
+                   <img src={song.imagePath} alt={song.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-royal-amethyst/20">
+                    <svg className="w-8 h-8 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5z"/></svg>
+                  </div>
+                )}
+              </div>
 
-              <audio controls className="w-full mt-2">
-                <source src={song.filePath} type="audio/mp3" />
-              </audio>
+              {/* Content Section */}
+              <div className="flex-1 ml-4 md:ml-0 min-w-0">
+                <div className="space-y-0.5 md:space-y-1">
+                  <h3 className="text-base md:text-xl font-bold text-mint-whisper truncate">
+                    {song.title}
+                  </h3>
+                  <p className="text-[10px] md:text-sm font-semibold text-royal-amethyst truncate">
+                    {song.artist}
+                  </p>
+                </div>
+                
+                {/* Mobile specific controls - simplified audio */}
+                <div className="md:hidden mt-2">
+                   <audio className="w-full h-6 opacity-30" controls>
+                    <source src={song.filePath} type="audio/mp3" />
+                  </audio>
+                </div>
+              </div>
 
-              <button
-                onClick={() => modaal(song._id)}
-                className="mt-4 w-full text-sm font-semibold text-blue-400 hover:text-blue-300 transition"
-              >
-                + Add To Playlist
-              </button>
+              {/* Desktop Audio & Buttons */}
+              <div className="hidden md:block mt-6 pt-6 border-t border-royal-amethyst/10">
+                <audio controls className="w-full h-8 opacity-60 hover:opacity-100 transition-opacity [&::-webkit-media-controls-enclosure]:bg-deep-amethyst/60 [&::-webkit-media-controls-panel]:text-mint-whisper">
+                  <source src={song.filePath} type="audio/mp3" />
+                </audio>
+              </div>
+
+              <div className="ml-2 md:ml-0">
+                <button
+                  onClick={() => modaal(song._id)}
+                  className="md:mt-6 text-[10px] sm:text-xs font-black tracking-widest uppercase text-mint-whisper/40 hover:text-mint-whisper transition-colors"
+                >
+                  <span className="hidden md:inline">+ Add to Playlist</span>
+                  <span className="md:hidden p-2 text-royal-amethyst">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  </span>
+                </button>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      
       {modal && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center">
-          <div className="bg-gray-800 border border-gray-700 w-80 rounded-xl shadow-xl p-6 animate-fadeIn">
-            
-            <h2 className="text-lg font-semibold text-white mb-4 text-center">
-              Select Playlist
+        <div className="fixed inset-0 z-[200] bg-dark-bg/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass-card w-full max-w-sm rounded-[2.5rem] p-8 sm:p-10 animate-in fade-in zoom-in duration-300">
+            <h2 className="text-xl sm:text-2xl font-bold text-mint-whisper mb-8 text-center tracking-tight">
+              Select <span className="text-royal-amethyst">Collection</span>
             </h2>
-
+            {/* Modal Body content same as before but ensured padding and scaling */}
             {playlists.length === 0 ? (
-              <p className="text-sm text-gray-400 text-center">
-                Playlist not found
-              </p>
+              <div className="text-center py-6 sm:py-8">
+                <p className="text-mint-whisper/40 text-xs sm:text-sm italic mb-6">No playlists found</p>
+                <button onClick={() => navigate('/createplylst')} className="btn-premium py-3 w-full">Create New</button>
+              </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-2 sm:space-y-3 max-h-48 sm:max-h-60 overflow-y-auto pr-2 custom-scrollbar">
                 {playlists.map((u) => (
                   <button
                     key={u._id}
                     onClick={() => addsongtoplist(u._id)}
-                    className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm font-medium
-                    text-teal-400 hover:bg-teal-500 hover:text-white transition"
+                    className="w-full text-left px-4 sm:px-5 py-3 sm:py-4 bg-deep-amethyst/40 border border-royal-amethyst/10 rounded-2xl text-xs sm:text-sm font-bold text-mint-whisper/70 hover:bg-royal-amethyst hover:text-white hover:border-transparent transition-all"
                   >
                     {u.title}
                   </button>
                 ))}
               </div>
             )}
-
             <button
               onClick={() => setmodal(false)}
-              className="mt-4 w-full text-sm text-gray-400 hover:text-white transition"
+              className="mt-6 sm:mt-8 w-full text-[10px] sm:text-xs font-bold text-mint-whisper/30 hover:text-mint-whisper uppercase tracking-widest transition-colors"
             >
-              Back
+              Nevermind
             </button>
           </div>
         </div>
