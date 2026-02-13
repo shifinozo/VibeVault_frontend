@@ -1,7 +1,11 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL:"http://localhost:3000/pjct"
+  // Production URL (Render)
+  baseURL: "https://vibevault-backend-yuqc.onrender.com/pjct"
+
+  // Local URL (Development)
+  // baseURL:"http://localhost:3000/pjct"
 })
 
 // This automatically sends JWT in every request

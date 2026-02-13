@@ -10,8 +10,7 @@ function CreateSong() {
   const [artist, setartist] = useState("")
   const [file, setfile] = useState(null)
 
-  const [image, setimage] = useState(null)
-
+  const [isUploading, setIsUploading] = useState(false);
   const [message, setMessage] = useState("")
   const navigate = useNavigate()
 
@@ -19,32 +18,34 @@ function CreateSong() {
     e.preventDefault()
 
     if (!title.trim() || !artist.trim() || !file) {
-      setMessage("please fill all fields")
+      setMessage("Please fill all fields")
       return
     }
 
     try {
+      setIsUploading(true);
+      setMessage("");
 
       const formdata = new FormData()
       formdata.append("title", title)
       formdata.append("artist", artist)
       formdata.append("file", file)
-
       formdata.append("image", image)
-
 
       const createsong = await api.post("/addsong", formdata, {
         headers: { "Content-Type": "multipart/form-data" }
       })
 
-      toast.success("song added succeffully")
-      console.log("song added successfully", createsong.data);
-      setMessage("song added successfully")
+      toast.success("Song added successfully!")
+      console.log("Song added successfully", createsong.data);
       navigate("/homepage")
 
     } catch (error) {
       console.log("Something went wrong!", error);
-      setMessage("Upload failed ")
+      setMessage(error.response?.data?.error || "Upload failed. Please try again.")
+      toast.error("Upload failed")
+    } finally {
+      setIsUploading(false);
     }
   }
 
@@ -140,9 +141,18 @@ function CreateSong() {
           <div className="pt-2 sm:pt-4 flex flex-col space-y-3 sm:space-y-4">
             <button
               type="submit"
-              className="btn-premium py-3.5 sm:py-5 text-sm sm:text-lg shadow-xl shadow-royal-amethyst/20"
+              disabled={isUploading}
+              className={`btn-premium py-3.5 sm:py-5 text-sm sm:text-lg shadow-xl shadow-royal-amethyst/20 relative overflow-hidden transition-all ${isUploading ? "opacity-90 scale-[0.98] cursor-not-allowed" : "hover:scale-[1.02]"
+                }`}
             >
-              Upload Track
+              {isUploading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-mint-whisper/30 border-t-white rounded-full animate-spin"></span>
+                  Processing Rhythm...
+                </span>
+              ) : (
+                "Upload Track"
+              )}
             </button>
 
             <button
