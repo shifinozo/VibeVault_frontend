@@ -69,11 +69,17 @@ export default function Allsongs() {
 
     } catch (error) {
       console.log(error);
-      toast.error("Song added to playlist failed")
-
     }
   };
 
+  const handlePlay = (e) => {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach((audio) => {
+      if (audio !== e.target) {
+        audio.pause();
+      }
+    });
+  };
 
 
   return (
@@ -90,9 +96,9 @@ export default function Allsongs() {
         <div className="max-w-md mx-auto mb-8 sm:mb-12 px-2">
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg className="h-4 w-4 text-mint-whisper/30 group-focus-within:text-royal-amethyst transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {/* <svg className="h-4 w-4 text-mint-whisper/30 group-focus-within:text-royal-amethyst transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              </svg> */}
             </div>
             <input
               type="text"
@@ -148,7 +154,7 @@ export default function Allsongs() {
 
                     {/* Mobile specific controls - simplified audio */}
                     <div className="md:hidden mt-1.5">
-                      <audio className="w-full h-5 opacity-20" controls>
+                      <audio className="w-full h-5 opacity-20" controls onPlay={handlePlay}>
                         <source src={song.filePath} type="audio/mp3" />
                       </audio>
                     </div>
@@ -156,7 +162,7 @@ export default function Allsongs() {
 
                   {/* Desktop Audio & Buttons */}
                   <div className="hidden md:block mt-6 pt-6 border-t border-royal-amethyst/10">
-                    <audio controls className="w-full h-8 opacity-60 hover:opacity-100 transition-opacity [&::-webkit-media-controls-enclosure]:bg-deep-amethyst/60 [&::-webkit-media-controls-panel]:text-mint-whisper">
+                    <audio controls onPlay={handlePlay} className="w-full h-8 opacity-60 hover:opacity-100 transition-opacity [&::-webkit-media-controls-enclosure]:bg-deep-amethyst/60 [&::-webkit-media-controls-panel]:text-mint-whisper">
                       <source src={song.filePath} type="audio/mp3" />
                     </audio>
                   </div>
@@ -216,4 +222,3 @@ export default function Allsongs() {
     </div>
   );
 }
-// export default Allsongs;

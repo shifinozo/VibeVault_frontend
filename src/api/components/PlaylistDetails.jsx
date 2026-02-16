@@ -54,7 +54,16 @@ export default function PlaylistDetails() {
       console.log("remove song failed", error);
       toast.error("remove song failed")
     }
-  }
+  };
+
+  const handlePlay = (e) => {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach((audio) => {
+      if (audio !== e.target) {
+        audio.pause();
+      }
+    });
+  };
 
 
   return (
@@ -107,7 +116,7 @@ export default function PlaylistDetails() {
                   </div>
 
                   <div className="hidden sm:block w-64 mx-8">
-                    <audio controls className="w-full h-8 opacity-60 hover:opacity-100 transition-opacity">
+                    <audio controls onPlay={handlePlay} className="w-full h-8 opacity-60 hover:opacity-100 transition-opacity">
                       <source src={song.filePath} type="audio/mp3" />
                     </audio>
                   </div>
@@ -115,7 +124,7 @@ export default function PlaylistDetails() {
                   <div className="flex items-center space-x-2">
                     {/* Mobile Audio - compact */}
                     <div className="sm:hidden">
-                      <audio className="w-24 h-6 opacity-30" controls>
+                      <audio className="w-24 h-6 opacity-30" controls onPlay={handlePlay}>
                         <source src={song.filePath} type="audio/mp3" />
                       </audio>
                     </div>
