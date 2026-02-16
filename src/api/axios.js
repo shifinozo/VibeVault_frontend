@@ -2,11 +2,11 @@ import axios from 'axios'
 
 const api = axios.create({
   // Production URL
-  baseURL: "https://vibe-vault-backend-three.vercel.app/pjct",
+  // baseURL: "https://vibe-vault-backend-three.vercel.app/pjct",
 
   // Fallback URLs (commented out)
   // baseURL: "https://vibevault-backend-yuqc.onrender.com/pjct"
-  // baseURL: "http://localhost:3000/pjct"
+  baseURL: "http://localhost:3000/pjct"
 })
 
 // This automatically sends JWT in every request

@@ -10,10 +10,10 @@ function Navbar() {
   return (
     <>
       {/* Top Bar - Premium Branding */}
-      <div className="glass-card sticky top-0 z-[100] flex justify-between items-center px-6 sm:px-10 h-16 sm:h-20 border-x-0 border-t-0 border-b border-royal-amethyst/20 rounded-none backdrop-blur-2xl">
+      <div className="glass-card sticky top-0 z-[100] flex justify-between items-center px-2 sm:px-10 h-14 sm:h-20 border-x-0 border-t-0 border-b border-royal-amethyst/20 rounded-none backdrop-blur-2xl mt-1">
         <h1
           onClick={() => navigate("/homepage")}
-          className="text-xl sm:text-3xl font-black text-mint-whisper tracking-tighter cursor-pointer hover:text-royal-amethyst transition-all duration-300"
+          className="text-3xl sm:text-4xl font-black text-mint-whisper tracking-tighter cursor-pointer hover:text-royal-amethyst transition-all duration-300 ml-10"
         >
           Vibe<span className="text-royal-amethyst">Vault</span>
         </h1>
@@ -41,7 +41,7 @@ function Navbar() {
             localStorage.clear();
             navigate("/loginuser");
           }}
-          className="btn-premium px-4 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-sm"
+          className="btn-premium px-3 sm:px-6 py-1.5 sm:py-2 text-[9px] sm:text-sm"
         >
           {/* Mobile Icon for logout if screen is too small */}
           <span className="hidden xs:inline">Logout</span>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import api from "../axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../pages/Navbar";
 
 function Allplaylist() {
   const [playlist, setplaylist] = useState([]);
@@ -56,6 +57,8 @@ function Allplaylist() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="bg-dark-bg min-h-screen py-8 sm:py-12 px-4 sm:px-6 relative overflow-hidden pb-32">
       
       {/* Back Button */}
@@ -160,6 +163,7 @@ function Allplaylist() {
         </div>
       )}
     </div>
+    </>
   );
 }
 
