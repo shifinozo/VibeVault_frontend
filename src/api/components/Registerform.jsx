@@ -110,7 +110,7 @@ function Register() {
               type="submit"
               className="w-full btn-premium py-4 mt-4 text-lg shadow-lg shadow-royal-amethyst/20"
             >
-              Request Access
+              Send OTP
             </button>
           </form>
         ) : (
@@ -133,7 +133,7 @@ function Register() {
               type="submit"
               className="w-full btn-premium py-4 mt-4 text-lg shadow-xl shadow-royal-amethyst/30"
             >
-              Confirm Identity
+              Verify OTP
             </button>
 
             <button
