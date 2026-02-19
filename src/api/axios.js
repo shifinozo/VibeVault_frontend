@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
   // Production URL
-  baseURL: "https://vibe-vault-backend-three.vercel.app/",
+  baseURL: "https://vibe-vault-backend-three.vercel.app/pjct",
 
   // Fallback URLs (commented out)
   // baseURL: "https://vibevault-backend-yuqc.onrender.com/pjct"
