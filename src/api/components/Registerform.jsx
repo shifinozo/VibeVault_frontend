@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 function Register() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [isOTPStep, setIsOTPStep] = useState(false);
   const [message, setMessage] = useState("");
@@ -14,13 +15,13 @@ function Register() {
   const handleuser = async (e) => {
     e.preventDefault();
 
-    if (!name.trim() || !email.trim()) {
-      setMessage("Please fill both fields");
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setMessage("Please fill all fields");
       return;
     }
 
     try {
-      const user = { name, email };
+      const user = { name, email, password };
       await api.post("/adduser", user);
 
       setIsOTPStep(true);
@@ -71,8 +72,8 @@ function Register() {
 
         {message && (
           <div className={`mb-6 p-3 rounded-lg border text-sm font-medium text-center ${message.includes("success") || message.includes("Welcome") || message.includes("sent")
-              ? "bg-green-500/10 border-green-500/20 text-green-400"
-              : "bg-red-500/10 border-red-500/20 text-red-400"
+            ? "bg-green-500/10 border-green-500/20 text-green-400"
+            : "bg-red-500/10 border-red-500/20 text-red-400"
             }`}>
             {message}
           </div>
@@ -102,6 +103,19 @@ function Register() {
                 placeholder="alex@example.com"
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
+                className="w-full input-premium py-3"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-mint-whisper/60 ml-1 uppercase tracking-widest">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full input-premium py-3"
               />
             </div>

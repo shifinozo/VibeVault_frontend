@@ -5,19 +5,20 @@ import toast from "react-hot-toast";
 
 function LoginUser() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!email.trim()) {
-      setMessage("Please enter your email.");
+    if (!email.trim() || !password.trim()) {
+      setMessage("Please enter your email and password.");
       return;
     }
 
     try {
-      const login = await api.post("/loginuser", { email });
+      const login = await api.post("/loginuser", { email, password });
       console.log("heyy", login);
 
       localStorage.setItem("token", login.data.token);
@@ -46,8 +47,8 @@ function LoginUser() {
 
         {message && (
           <div className={`mb-6 p-3 rounded-lg border text-sm font-medium text-center ${message.includes("Login") || message.includes("No") || message.includes("fail")
-              ? "bg-red-500/10 border-red-500/20 text-red-400"
-              : "bg-green-500/10 border-green-500/20 text-green-400"
+            ? "bg-red-500/10 border-red-500/20 text-red-400"
+            : "bg-green-500/10 border-green-500/20 text-green-400"
             }`}>
             {message}
           </div>
@@ -63,6 +64,18 @@ function LoginUser() {
               placeholder="your@email.com"
               className="w-full input-premium py-4"
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-bold text-mint-whisper/60 ml-1 uppercase tracking-widest">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="w-full input-premium py-4"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
