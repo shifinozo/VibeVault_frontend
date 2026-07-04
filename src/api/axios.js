@@ -7,6 +7,7 @@ const api = axios.create({
   // Fallback URLs (commented out)
   // baseURL: "https://vibevault-backend-yuqc.onrender.com/pjct"
   // baseURL: "http://localhost:3000/pjct"
+  // baseURL: "http://localhost:5176/pjct"
 })
 
 // This automatically sends JWT in every request
