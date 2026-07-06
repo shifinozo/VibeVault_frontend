@@ -1,10 +1,29 @@
 import { useState } from "react";
+import axios from "axios";
 import api from "../axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Navbar from "../pages/Navbar";
 
+// Vercel caps request bodies at ~4.5MB, so the file can't go through our
+// backend. Instead we get a signed upload from Cloudinary and upload
+// straight there, then only send the resulting URL to /addsong.
+const uploadToCloudinary = async (file, folder, resourceType) => {
+  const { data: sig } = await api.post("/getUploadSignature", { folder });
 
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("api_key", sig.apiKey);
+  formData.append("timestamp", sig.timestamp);
+  formData.append("signature", sig.signature);
+  formData.append("folder", folder);
+
+  const { data } = await axios.post(
+    `https://api.cloudinary.com/v1_1/${sig.cloudName}/${resourceType}/upload`,
+    formData
+  );
+  return data.secure_url;
+};
 
 function CreateSong() {
   const [title, settitle] = useState("")
@@ -28,15 +47,12 @@ function CreateSong() {
       setIsUploading(true);
       setMessage("");
 
-      const formdata = new FormData()
-      formdata.append("title", title)
-      formdata.append("artist", artist)
-      formdata.append("file", file)
-      formdata.append("image", image)
+      const [filePath, imagePath] = await Promise.all([
+        uploadToCloudinary(file, "songs", "video"),
+        uploadToCloudinary(image, "song-images", "image"),
+      ])
 
-      const createsong = await api.post("/addsong", formdata, {
-        headers: { "Content-Type": "multipart/form-data" }
-      })
+      const createsong = await api.post("/addsong", { title, artist, filePath, imagePath })
 
       toast.success("Song added successfully!")
       console.log("Song added successfully", createsong.data);
