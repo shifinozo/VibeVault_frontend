@@ -44,8 +44,8 @@ export default function Allsongs() {
     }
   }
 
-  const modaal = (songId) => {
-    setselectedsong(songId),
+  const modaal = (song) => {
+    setselectedsong(song),
       setmodal(true)
     fetchplaylist()
   }
@@ -56,8 +56,13 @@ export default function Allsongs() {
   const addsongtoplist = async (playlistId) => {
     try {
       await api.put(
-        `/findandupdateplaylist/${playlistId}/addsong/${selectedsong}`,
-        {},
+        `/findandupdateplaylist/${playlistId}/addsong/${selectedsong._id}`,
+        {
+          title: selectedsong.title,
+          artist: selectedsong.artist,
+          filePath: selectedsong.filePath,
+          imagePath: selectedsong.imagePath,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -169,7 +174,7 @@ export default function Allsongs() {
 
                   <div className="ml-2 md:ml-0">
                     <button
-                      onClick={() => modaal(song._id)}
+                      onClick={() => modaal(song)}
                       className="md:mt-6 text-[10px] sm:text-xs font-black tracking-widest uppercase text-mint-whisper/40 hover:text-mint-whisper transition-colors"
                     >
                       <span className="hidden md:inline p-2 ">+ Add to Playlist</span>
